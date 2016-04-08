@@ -1,7 +1,6 @@
 .editorconfig
 .jshintrc
 .travis.yml
-.babelrc
 .idea/
 test/
 !lib/
