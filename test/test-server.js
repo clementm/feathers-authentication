@@ -8,6 +8,7 @@ import { hooks } from '../src/';
 import bodyParser from 'body-parser';
 import memory from 'feathers-memory';
 import async from 'async';
+import session from 'express-session';
 
 export default function(settings, username, password, useSocketio, next) {
 
@@ -18,6 +19,7 @@ export default function(settings, username, password, useSocketio, next) {
     .configure(feathersHooks())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
+    .use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
     .configure(authentication(settings))
     .use('/users', memory())
     .use('/messages', memory())

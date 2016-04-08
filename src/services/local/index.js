@@ -84,7 +84,13 @@ export class Service {
         // Get a new JWT and the associated user from the Auth token service and send it back to the client.
         return app.service(options.tokenEndpoint)
                   .create(user)
-                  .then(resolve)
+                  .then((...args) => {
+                    if (params.req && params.req.session) {
+                      params.req.session.token = args[0].token;
+                      params.req.session.user = args[0].data;
+                    }
+                    resolve(...args);
+                  })
                   .catch(reject);
       });
 

@@ -85,15 +85,15 @@ describe('REST authentication', function() {
           });
         });
 
-        it('sets the JWT in a cookie', function(done) {
+        it('sets the JWT in a cookie and setup session', function(done) {
           var jar = request.jar();
           options.jar = jar;
 
           request(options, function() {
             var cookies = jar.getCookies(`${host}/auth/success`);
 
-            expect(cookies.length).to.equal(1);
-            expect(cookies[0].toString().indexOf('feathers-jwt')).to.not.equal(-1);
+            expect(cookies.length).to.equal(2);
+            expect(cookies[0].toString().indexOf('feathers-jwt')+cookies[1].toString().indexOf('feathers-jwt')).to.not.equal(-2);
             done();
           });
         });
